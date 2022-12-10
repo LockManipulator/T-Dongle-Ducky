@@ -1,6 +1,8 @@
 # T-Dongle-Ducky
 LilyGo T-Dongle-S3 turned into a Rubber Ducky with wifi  
 
+https://i.imgur.com/aMGWvhj.png  
+
 Board should be ESP32-S3-USB-OTG  
 Use libraries from https://github.com/Xinyuan-LilyGO/T-Dongle-S3 under /lib if available  
 Go to IP address on screen or 192.168.0.1 if in AP mode  

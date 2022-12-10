@@ -1,5 +1,16 @@
 /*
-
+Board should be ESP32-S3-USB-OTG
+Use libraries from https://github.com/Xinyuan-LilyGO/T-Dongle-S3 under /lib if available
+Go to IP address on screen or 192.168.0.1 if in AP mode
+First input will type out the string in the box
+Second is to save a file to USB. 
+Third is to run a file
+MUST save and run a file with a slash in front and extension after i.e. "/example.txt"
+PRINT this is a string - types out the following string
+PRINTLN also string but hits enter - types out the following string then hits enter
+GUI - presses and releases the left GUI key
+DELAY 1000 - waits x ms
+ENTER - hits enter
 */
 #if ARDUINO_USB_MODE
 #warning This sketch should be used when USB is in OTG mode
@@ -65,29 +76,6 @@ String SendHTML(){
   ptr += "</body></html>";
   return ptr;
 }
-
-const char index_html[] PROGMEM = R"rawliteral(
-<!DOCTYPE HTML><html><head>
-  <title>ESP Input Form</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head><body>
-  <form action="/get">
-    <input type="text" id="input1" name="input1">
-    <input type="submit" value="Submit">
-  </form><br>
-  <form action="/get">
-    <textarea id="code" name="code" id="code" rows="4" cols="50"></textarea><br>
-    Filename: <input type="text" id="filesave" name="filesave">
-    <input type="submit" value="Save">
-  </form><br>
-  <form action="/get">
-    <input type="text" id="filerun" name="filerun">
-    <input type="submit" value="Run from file">
-  </form><br>
-  <form action="/get">
-    <input type="submit" value="Rick Roll" id="button1" name="button1">
-  </form>
-</body></html>)rawliteral";
 
 void notFound(AsyncWebServerRequest *request) {
   request->send(404, "text/plain", "Not found");

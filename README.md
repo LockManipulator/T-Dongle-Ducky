@@ -1,7 +1,7 @@
 # T-Dongle-Ducky
 LilyGo T-Dongle-S3 turned into a Rubber Ducky with wifi  
 
-https://i.imgur.com/aMGWvhj.png  
+https://imgur.com/a/RgEbP6n
 
 Board should be ESP32-S3-USB-OTG  
 Use libraries from https://github.com/Xinyuan-LilyGO/T-Dongle-S3 under /lib if available  

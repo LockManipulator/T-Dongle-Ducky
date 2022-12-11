@@ -3,8 +3,9 @@ Board should be ESP32-S3-USB-OTG
 Use libraries from https://github.com/Xinyuan-LilyGO/T-Dongle-S3 under /lib if available
 Go to IP address on screen or 192.168.0.1 if in AP mode
 First input will type out the string in the box
-Second is to save a file to USB. 
-Third is to run a file
+Second is to write code
+Third is to save code with supplied filename
+Fourth is to run code with supplied filename
 MUST save and run a file with a slash in front and extension after i.e. "/example.txt"
 PRINT this is a string - types out the following string
 PRINTLN also string but hits enter - types out the following string then hits enter
@@ -91,9 +92,7 @@ void RickRoll() {
   delay(500);
   Keyboard.println("web");
   delay(1000);
-  if (!apmode) {
-    Keyboard.println("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-  }
+  Keyboard.println("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 }
 
 void parse(String text) {
@@ -102,7 +101,12 @@ void parse(String text) {
   char* ptr = strtok(txt, delimiter);
   while(ptr != NULL) {
       String com = String(ptr);
-      if (com.startsWith("GUI")) {
+      if (com.startsWith("GUI ")) {
+        com.remove(0, 4);
+        Keyboard.pressRaw(0xe3);
+        Keyboard.press(com);
+      }
+      else if (com.startsWith("GUI")) {
         Keyboard.pressRaw(0xe3);
         Keyboard.releaseAll();
       }
@@ -122,6 +126,13 @@ void parse(String text) {
         com.remove(0, 8);
         Keyboard.print(com);
         Keyboard.press(KEY_RETURN);
+        Keyboard.releaseAll();
+      }
+      else if (com.startsWith("HOLD ")) {
+        com.remove(0, 5);
+        Keyboard.press(com);
+      }
+      else if (com.startsWith("RELEASE")) {
         Keyboard.releaseAll();
       }
       ptr = strtok(NULL, delimiter);

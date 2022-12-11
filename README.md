@@ -32,10 +32,12 @@ PRINTLN web
 DELAY 1000  
 PRINTLN www.youtube.com/watch?v=dQw4w9WgXcQ  
 
-# Roadmap
-- Implement Ducky Script
-- Read keyboard led states
-- Mount as USB storage device
-- Reverse shell through USB port
-- OS detection
+# Roadmap  
+- Implement Ducky Script  
+- Read keyboard led states  
+- Add bluetooth command and control capabilities
+- Add mouse control  
+- Mount as USB storage device  
+- Reverse shell through USB port  
+- OS detection  
 - Automatically grab usernames and hashes, network credentials, chrome/firefox passwords, etc. 

@@ -13,7 +13,7 @@ First input will type out the string in the box
 Second is to write code  
 Third is to save above code with supplied filename  
 Fourth is to run code with supplied filename  
-MUST save and run a file with a SLASH IN FRONT and EXTENSION AFTER i.e. "/example.txt"  
+MUST save and run a file with a SLASH IN FRONT and EXTENSION AFTER i.e. /example.txt  
 
 # Commands 
 PRINT:  Types out the following string  

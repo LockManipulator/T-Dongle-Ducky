@@ -23,6 +23,7 @@ GUI: Presses and releases the left GUI key
 GUI <character>: Presses the left GUI and a single character i.e. GUI r
 DELAY x: Waits x ms  
 ENTER: Hits enter  
+HOLD: Holds a single key. Can be used with numbers, lowercase letters, SPACE, BACKSPACE, ENTER, or TAB.
 Anything that doesn't match the above gets treated as a comment. Comments can not, at the time, be put on the same line as a command.  
 Please don't use trailing spaces in your code. I know Python not c++ so my input sanitization here is not great.  
 

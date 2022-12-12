@@ -2,9 +2,10 @@
 Go to IP address on screen or 192.168.0.1 if in AP mode  
 First input will type out the string in the box  
 Second is to run a single command  
-Third is to write code  
-Fourth is to save above code with supplied filename  
-Fifth is to delete a file  
+Third is to delete a file
+Fourth is to write code  
+FIfth is to save above code with supplied filename  
+Sixth is to delete a file  
 MUST save/run/delete a file with a SLASH IN FRONT and EXTENSION AFTER i.e. /example.txt  
 
 PRINT: Types out the following string
@@ -193,18 +194,18 @@ String SendHTML(){
   ptr += "<input type=\"submit\" value=\"Submit\">";
   ptr += "</form><br>";
   ptr += "<form action=\"/get\">";
-  ptr += "Filename: <input type=\"text\" id=\"filerun\" name=\"filerun\">";
-  ptr += "<input type=\"submit\" value=\"Run from file\">";
-  ptr+= "</form><br>";
+  ptr += "Filename: <input type=\"text\" id=\"filedel\" name=\"filedel\">";
+  ptr += "<input type=\"submit\" value=\"Delete\">";
+  ptr += "</form><br>";
   ptr += "<form action=\"/get\">";
   ptr += "<textarea id=\"code\" name=\"code\" id=\"code\" rows=\"10\" cols=\"30\"></textarea><br>";
   ptr += "Filename: <input type=\"text\" id=\"filesave\" name=\"filesave\">";
   ptr += "<input type=\"submit\" value=\"Save\">";
   ptr += "</form><br>";
   ptr += "<form action=\"/get\">";
-  ptr += "Filename: <input type=\"text\" id=\"filedel\" name=\"filedel\">";
-  ptr += "<input type=\"submit\" value=\"Delete\">";
-  ptr += "</form><br>";
+  ptr += "Filename: <input type=\"text\" id=\"filerun\" name=\"filerun\">";
+  ptr += "<input type=\"submit\" value=\"Run from file\">";
+  ptr+= "</form><br>";
   ptr += "Files on SD<br>";
   ptr += "-----------<br>";
   ptr += listDir(SD_MMC, "/", 0);

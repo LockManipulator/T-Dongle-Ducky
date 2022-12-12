@@ -10,10 +10,11 @@ Tested on Linux but most keyboard codes should work in Windows too. Unsure about
 
 Go to IP address on screen or 192.168.0.1 if in AP mode  
 First input will type out the string in the box  
-Second is to write code  
-Third is to save above code with supplied filename  
-Fourth is to run code with supplied filename  
-MUST save and run a file with a SLASH IN FRONT and EXTENSION AFTER i.e. /example.txt  
+Second is to run a single command  
+Third is to write code  
+Fourth is to save above code with supplied filename  
+Fifth is to delete a file  
+MUST save/run/delete a file with a SLASH IN FRONT and EXTENSION AFTER i.e. /example.txt  
 
 # Commands 
 PRINT:  Types out the following string  

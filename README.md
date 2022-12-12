@@ -11,9 +11,9 @@ Tested on Linux but most keyboard codes should work in Windows too. Unsure about
 Go to IP address on screen or 192.168.0.1 if in AP mode  
 First input will type out the string in the box  
 Second is to run a single command  
-Third is to delete a file  
-Fourth is to write code  
-FIfth is to save above code with supplied filename  
+Third is to write code  
+Fourth is to save above code  
+Fift is to run code  
 Sixth is to delete a file  
 MUST save/run/delete a file with a SLASH IN FRONT and EXTENSION AFTER i.e. /example.txt  
 

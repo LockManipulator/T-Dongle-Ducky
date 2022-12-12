@@ -78,32 +78,7 @@ String chars[62] = {
   "x",
   "y",
   "z",
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
+  "0",
   "1",
   "2",
   "3",
@@ -113,7 +88,10 @@ String chars[62] = {
   "7",
   "8",
   "9",
-  "0"
+  "SPACE",
+  "BACKSPACE",
+  "TAB",
+  "ENTER"
 };
 
 #define SHIFT 0x80
@@ -144,32 +122,6 @@ const uint8_t char_bytes[62]{
   0x1b,          // x
   0x1c,          // y
   0x1d,          // z
-  0x04|SHIFT,    // A
-  0x05|SHIFT,    // B
-  0x06|SHIFT,    // C
-  0x07|SHIFT,    // D
-  0x08|SHIFT,    // E
-  0x09|SHIFT,    // F
-  0x0a|SHIFT,    // G
-  0x0b|SHIFT,    // H
-  0x0c|SHIFT,    // I
-  0x0d|SHIFT,    // J
-  0x0e|SHIFT,    // K
-  0x0f|SHIFT,    // L
-  0x10|SHIFT,    // M
-  0x11|SHIFT,    // N
-  0x12|SHIFT,    // O
-  0x13|SHIFT,    // P
-  0x14|SHIFT,    // Q
-  0x15|SHIFT,    // R
-  0x16|SHIFT,    // S
-  0x17|SHIFT,    // T
-  0x18|SHIFT,    // U
-  0x19|SHIFT,    // V
-  0x1a|SHIFT,    // W
-  0x1b|SHIFT,    // X
-  0x1c|SHIFT,    // Y
-  0x1d|SHIFT,    // Z
   0x27,          // 0
   0x1e,          // 1
   0x1f,          // 2
@@ -180,6 +132,10 @@ const uint8_t char_bytes[62]{
   0x24,          // 7
   0x25,          // 8
   0x26,          // 9
+  0x2c,          // SPACE
+  0x2a,          // BACKSPACE
+  0x2b,          // TAB
+  0x28,          // ENTER
 };
 
 #define PRINT_STR(str, x, y)                                                                                                                         \

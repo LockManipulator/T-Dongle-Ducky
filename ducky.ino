@@ -1,17 +1,18 @@
 /*
-Board should be ESP32-S3-USB-OTG
-Use libraries from https://github.com/Xinyuan-LilyGO/T-Dongle-S3 under /lib if available
 Go to IP address on screen or 192.168.0.1 if in AP mode
 First input will type out the string in the box
 Second is to write code
-Third is to save code with supplied filename
+Third is to save above code with supplied filename
 Fourth is to run code with supplied filename
-MUST save and run a file with a slash in front and extension after i.e. "/example.txt"
-PRINT this is a string - types out the following string
-PRINTLN also string but hits enter - types out the following string then hits enter
-GUI - presses and releases the left GUI key
-DELAY 1000 - waits x ms
-ENTER - hits enter
+MUST save and run a file with a SLASH IN FRONT and EXTENSION AFTER i.e. /example.txt
+
+PRINT: Types out the following string
+PRINTLN: Types out the following string then hits enter
+GUI: Presses and releases the left GUI key
+GUI : Presses the left GUI and a single character i.e. GUI r
+DELAY x: Waits x ms
+ENTER: Hits enter
+HOLD: Holds a single key. Can be used with numbers, lowercase letters, SPACE, BACKSPACE, ENTER, or TAB. Anything that doesn't
 */
 #if ARDUINO_USB_MODE
 #warning This sketch should be used when USB is in OTG mode

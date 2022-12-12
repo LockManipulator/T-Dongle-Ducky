@@ -10,10 +10,11 @@ MUST save/run/delete a file with a SLASH IN FRONT and EXTENSION AFTER i.e. /exam
 PRINT: Types out the following string
 PRINTLN: Types out the following string then hits enter
 GUI: Presses and releases the left GUI key
-GUI : Presses the left GUI and a single character i.e. GUI r
+GUI : Presses the left GUI and a single character. Single character can be a number or lowercase letter.
 DELAY x: Waits x ms
 ENTER: Hits enter
-HOLD: Holds a single key. Can be used with numbers, lowercase letters, SPACE, BACKSPACE, ENTER, or TAB. Anything that doesn't
+HOLD: Holds a single key. Can be used with numbers, lowercase letters, SPACE, BACKSPACE, ENTER, TAB, CTRL, ALT, SHIFT, or DEL.
+Anything that doesn't match the above gets treated as a comment. Comments can not, at the time, be put on the same line as a command.
 */
 #if ARDUINO_USB_MODE
 #warning This sketch should be used when USB is in OTG mode
@@ -142,10 +143,10 @@ const uint8_t char_bytes[62]{
   0x2a,          // BACKSPACE
   0x2b,          // TAB
   0x28,          // ENTER
-  0x00,          // CTRL (just here to keep lists the same size)
-  0x00,          // ALT (just here to keep lists the same size)
-  0x00,          // SHIFT (just here to keep lists the same size)
-  0x00,          // DEL
+  0xe0,          // CTRL (just here to keep lists the same size)
+  0xe2,          // ALT (just here to keep lists the same size)
+  0xe1,          // SHIFT (just here to keep lists the same size)
+  0x4c,          // DEL
 };
 
 #define PRINT_STR(str, x, y)                                                                                                                         \
@@ -256,19 +257,7 @@ void parse(String text) {
       else if (com.startsWith("HOLD ")) {
         com.remove(0, 5);
         for (int i=0; i<62; i++) {
-          if (chars[i] == "CTRL") {
-            Keyboard.press(KEY_LEFT_CTRL);
-          }
-          else if (chars[i] == "ALT") {
-            Keyboard.press(KEY_LEFT_ALT);
-          }
-          else if (chars[i] == "SHIFT") {
-            Keyboard.press(KEY_LEFT_SHIFT);
-          }
-          else if (chars[i] == "DEL") {
-            Keyboard.press(KEY_DELETE);
-          }
-          else if (chars[i] == com){
+          if (chars[i] == com){
             Keyboard.pressRaw(char_bytes[i]);
             break;
           }

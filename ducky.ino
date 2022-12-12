@@ -1,4 +1,6 @@
 /*
+USAGE
+-----
 Go to IP address on screen or 192.168.0.1 if in AP mode  
 First input will type out the string in the box  
 Second is to run a single command  
@@ -8,14 +10,32 @@ Fift is to run code
 Sixth is to delete a file  
 MUST save/run/delete a file with a SLASH IN FRONT and EXTENSION AFTER i.e. /example.txt  
 
+COMMANDS
+--------
 PRINT: Types out the following string
 PRINTLN: Types out the following string then hits enter
 GUI: Presses and releases the left GUI key
 GUI : Presses the left GUI and a single character. Single character can be a number or lowercase letter.
 DELAY x: Waits x ms
 ENTER: Hits enter
-HOLD: Holds a single key. Can be used with numbers, lowercase letters, SPACE, BACKSPACE, ENTER, TAB, CTRL, ALT, SHIFT, or DEL.
+HOLD: Holds a single key. If letter, then it has to be lowercase.
 Anything that doesn't match the above gets treated as a comment. Comments can not, at the time, be put on the same line as a command.
+
+Non-alphanumeric Keys
+---------------------
+CTRL
+ALT
+SHIFT
+DEL
+RIGHT
+LEFT
+UP
+DOWN
+F1-F12
+ENTER
+TAB
+BACKSPACE
+SPACE
 */
 #if ARDUINO_USB_MODE
 #warning This sketch should be used when USB is in OTG mode
@@ -55,7 +75,7 @@ IPAddress subnet(255,255,255,0);
 AsyncWebServer server(80);
 String header;
 
-String chars[62] = {
+String chars[86] = {
   "a",
   "b",
   "c",
@@ -99,11 +119,27 @@ String chars[62] = {
   "CTRL",
   "ALT",
   "SHIFT",
-  "DEL"
+  "DEL",
+  "F1",
+  "F2",
+  "F3",
+  "F4",
+  "F5",
+  "F6",
+  "F7",
+  "F8",
+  "F9",
+  "F10",
+  "F11",
+  "F12",
+  "RIGHT",
+  "LEFT",
+  "DOWN",
+  "UP"
 };
 
 #define SHIFT 0x80
-const uint8_t char_bytes[62]{
+const uint8_t char_bytes[86]{
   0x04,          // a
   0x05,          // b
   0x06,          // c
@@ -148,6 +184,22 @@ const uint8_t char_bytes[62]{
   0xe2,          // ALT (just here to keep lists the same size)
   0xe1,          // SHIFT (just here to keep lists the same size)
   0x4c,          // DEL
+  0x3a,          // F1
+  0x3b,          // F2
+  0x3c,          // F3
+  0x3d,          // F4
+  0x3e,          // F5
+  0x3f,          // F6
+  0x40,          // F7
+  0x41,          // F8
+  0x42,          // F9
+  0x43,          // F10
+  0x44,          // F11
+  0x45,          // F12
+  0x4e,          // RIGHT
+  0x4f,          // LEFT
+  0x50,          // DOWN
+  0x51,          // UP
 };
 
 #define PRINT_STR(str, x, y)                                                                                                                         \
@@ -239,7 +291,7 @@ void parse(String text) {
       if (com.startsWith("GUI ")) {
         com.remove(0, 4);
         Keyboard.pressRaw(0xe3);
-        for (int i=0; i<62; i++) {
+        for (int i=0; i<86; i++) {
           if (chars[i] == com){
             Keyboard.pressRaw(char_bytes[i]);
           }
@@ -257,7 +309,7 @@ void parse(String text) {
       }
       else if (com.startsWith("HOLD ")) {
         com.remove(0, 5);
-        for (int i=0; i<62; i++) {
+        for (int i=0; i<86; i++) {
           if (chars[i] == com){
             Keyboard.pressRaw(char_bytes[i]);
             break;

@@ -93,7 +93,11 @@ String chars[62] = {
   "SPACE",
   "BACKSPACE",
   "TAB",
-  "ENTER"
+  "ENTER",
+  "CTRL",
+  "ALT",
+  "SHIFT",
+  "DEL"
 };
 
 #define SHIFT 0x80
@@ -138,6 +142,10 @@ const uint8_t char_bytes[62]{
   0x2a,          // BACKSPACE
   0x2b,          // TAB
   0x28,          // ENTER
+  0x00,          // CTRL (just here to keep lists the same size)
+  0x00,          // ALT (just here to keep lists the same size)
+  0x00,          // SHIFT (just here to keep lists the same size)
+  0x00,          // DEL
 };
 
 #define PRINT_STR(str, x, y)                                                                                                                         \
@@ -145,6 +153,30 @@ const uint8_t char_bytes[62]{
     tft.drawString(str, x, y);                                                                                                                       \
     y = y + 8;                                                                                                                                          \
   } while (0);
+
+String listDir(fs::FS &fs, const char * dirname, uint8_t levels){
+    String all_files = "";
+    File root = fs.open(dirname);
+    if(!root){
+        return "None";
+    }
+    if(!root.isDirectory()){
+        return "None";
+    }
+
+    File file = root.openNextFile();
+    while(file){
+        if(file.isDirectory()){
+            if(levels){
+                listDir(fs, file.path(), levels -1);
+            }
+        } else {
+          all_files += "/" + String(file.name()) + "<br>";
+        }
+        file = root.openNextFile();
+    }
+    return all_files;
+}
 
 String SendHTML(){
   String ptr = "<!DOCTYPE html> <html>\n";
@@ -208,22 +240,8 @@ void parse(String text) {
         for (int i=0; i<62; i++) {
           if (chars[i] == com){
             Keyboard.pressRaw(char_bytes[i]);
-            break;
           }
         }
-        Keyboard.releaseAll();
-      }
-      else if (com.startsWith("GUI")) {
-        Keyboard.pressRaw(0xe3);
-        Keyboard.releaseAll();
-      }
-      else if (com.startsWith("ENTER")) {
-        Keyboard.press(KEY_RETURN);
-        Keyboard.releaseAll();
-      }
-      else if (com.startsWith("DELAY ")) {
-        com.remove(0, 6);
-        delay(com.toInt());
       }
       else if (com.startsWith("PRINT ")) {
         com.remove(0, 6);
@@ -238,7 +256,19 @@ void parse(String text) {
       else if (com.startsWith("HOLD ")) {
         com.remove(0, 5);
         for (int i=0; i<62; i++) {
-          if (chars[i] == com){
+          if (chars[i] == "CTRL") {
+            Keyboard.press(KEY_LEFT_CTRL);
+          }
+          else if (chars[i] == "ALT") {
+            Keyboard.press(KEY_LEFT_ALT);
+          }
+          else if (chars[i] == "SHIFT") {
+            Keyboard.press(KEY_LEFT_SHIFT);
+          }
+          else if (chars[i] == "DEL") {
+            Keyboard.press(KEY_DELETE);
+          }
+          else if (chars[i] == com){
             Keyboard.pressRaw(char_bytes[i]);
             break;
           }
@@ -249,30 +279,6 @@ void parse(String text) {
       }
       ptr = strtok(NULL, delimiter);
   }
-}
-
-String listDir(fs::FS &fs, const char * dirname, uint8_t levels){
-    String all_files = "";
-    File root = fs.open(dirname);
-    if(!root){
-        return "None";
-    }
-    if(!root.isDirectory()){
-        return "None";
-    }
-
-    File file = root.openNextFile();
-    while(file){
-        if(file.isDirectory()){
-            if(levels){
-                listDir(fs, file.path(), levels -1);
-            }
-        } else {
-          all_files += "/" + String(file.name()) + "<br>";
-        }
-        file = root.openNextFile();
-    }
-    return all_files;
 }
 
 void readFile(fs::FS &fs, const char * path){

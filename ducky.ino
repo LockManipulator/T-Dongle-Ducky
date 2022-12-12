@@ -51,6 +51,137 @@ IPAddress subnet(255,255,255,0);
 AsyncWebServer server(80);
 String header;
 
+String chars[62] = {
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "0"
+};
+
+#define SHIFT 0x80
+const uint8_t char_bytes[62]{
+  0x04,          // a
+  0x05,          // b
+  0x06,          // c
+  0x07,          // d
+  0x08,          // e
+  0x09,          // f
+  0x0a,          // g
+  0x0b,          // h
+  0x0c,          // i
+  0x0d,          // j
+  0x0e,          // k
+  0x0f,          // l
+  0x10,          // m
+  0x11,          // n
+  0x12,          // o
+  0x13,          // p
+  0x14,          // q
+  0x15,          // r
+  0x16,          // s
+  0x17,          // t
+  0x18,          // u
+  0x19,          // v
+  0x1a,          // w
+  0x1b,          // x
+  0x1c,          // y
+  0x1d,          // z
+  0x04|SHIFT,    // A
+  0x05|SHIFT,    // B
+  0x06|SHIFT,    // C
+  0x07|SHIFT,    // D
+  0x08|SHIFT,    // E
+  0x09|SHIFT,    // F
+  0x0a|SHIFT,    // G
+  0x0b|SHIFT,    // H
+  0x0c|SHIFT,    // I
+  0x0d|SHIFT,    // J
+  0x0e|SHIFT,    // K
+  0x0f|SHIFT,    // L
+  0x10|SHIFT,    // M
+  0x11|SHIFT,    // N
+  0x12|SHIFT,    // O
+  0x13|SHIFT,    // P
+  0x14|SHIFT,    // Q
+  0x15|SHIFT,    // R
+  0x16|SHIFT,    // S
+  0x17|SHIFT,    // T
+  0x18|SHIFT,    // U
+  0x19|SHIFT,    // V
+  0x1a|SHIFT,    // W
+  0x1b|SHIFT,    // X
+  0x1c|SHIFT,    // Y
+  0x1d|SHIFT,    // Z
+  0x27,          // 0
+  0x1e,          // 1
+  0x1f,          // 2
+  0x20,          // 3
+  0x21,          // 4
+  0x22,          // 5
+  0x23,          // 6
+  0x24,          // 7
+  0x25,          // 8
+  0x26,          // 9
+};
+
 #define PRINT_STR(str, x, y)                                                                                                                         \
   do {                                                                                                                                               \
     tft.drawString(str, x, y);                                                                                                                       \
@@ -65,12 +196,12 @@ String SendHTML(){
   ptr += "<form action=\"/get\">";
   ptr += "String: <input type=\"text\" id=\"input1\" name=\"input1\">";
   ptr += "<input type=\"submit\" value=\"Submit\">";
-  ptr += "</form><br>";
+  ptr += "</form>";
   ptr += "<form action=\"/get\">";
   ptr += "<textarea id=\"code\" name=\"code\" id=\"code\" rows=\"10\" cols=\"30\"></textarea><br>";
   ptr += "Filename: <input type=\"text\" id=\"filesave\" name=\"filesave\">";
   ptr += "<input type=\"submit\" value=\"Save\">";
-  ptr += "</form><br>";
+  ptr += "</form>";
   ptr += "<form action=\"/get\">";
   ptr += "Filename: <input type=\"text\" id=\"filerun\" name=\"filerun\">";
   ptr += "<input type=\"submit\" value=\"Run from file\">";
@@ -104,7 +235,13 @@ void parse(String text) {
       if (com.startsWith("GUI ")) {
         com.remove(0, 4);
         Keyboard.pressRaw(0xe3);
-        Keyboard.press(com);
+        for (int i=0; i<62; i++) {
+          if (chars[i] == com){
+            Keyboard.pressRaw(char_bytes[i]);
+            break;
+          }
+        }
+        Keyboard.releaseAll();
       }
       else if (com.startsWith("GUI")) {
         Keyboard.pressRaw(0xe3);
@@ -130,7 +267,12 @@ void parse(String text) {
       }
       else if (com.startsWith("HOLD ")) {
         com.remove(0, 5);
-        Keyboard.press(com);
+        for (int i=0; i<62; i++) {
+          if (chars[i] == com){
+            Keyboard.pressRaw(char_bytes[i]);
+            break;
+          }
+        }
       }
       else if (com.startsWith("RELEASE")) {
         Keyboard.releaseAll();

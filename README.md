@@ -20,10 +20,10 @@ MUST save/run/delete a file with a SLASH IN FRONT and EXTENSION AFTER i.e. /exam
 PRINT:  Types out the following string  
 PRINTLN: Types out the following string then hits enter  
 GUI: Presses and releases the left GUI key  
-GUI <character>: Presses the left GUI and a single character. Single character can be a number or lowercase letter.
+GUI <character>: Presses the left GUI and a single character. Single character can be a number or lowercase letter.  
 DELAY x: Waits x ms  
 ENTER: Hits enter  
-HOLD: Holds a single key. Can be used with numbers, lowercase letters, SPACE, BACKSPACE, ENTER, TAB, CTRL, ALT, SHIFT, or DEL.
+HOLD: Holds a single key. Can be used with numbers, lowercase letters, SPACE, BACKSPACE, ENTER, TAB, CTRL, ALT, SHIFT, or DEL.  
 Anything that doesn't match the above gets treated as a comment. Comments can not, at the time, be put on the same line as a command.  
 Please don't use trailing spaces in your code. I know Python not c++ so my input sanitization here is not great.  
 

@@ -5,6 +5,7 @@ https://imgur.com/a/RgEbP6n
 
 Board should be ESP32-S3-USB-OTG in Arduino IDE  
 Use libraries from https://github.com/Xinyuan-LilyGO/T-Dongle-S3 under /lib if available  
+Change wifi/access point name/password in code to what you need  
 
 # Usage
 

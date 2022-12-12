@@ -138,7 +138,6 @@ String chars[60] = {
   "UP"
 };
 
-#define SHIFT 0x80
 const uint8_t char_bytes[60]{
   0x04,          // a
   0x05,          // b
@@ -274,7 +273,7 @@ void typeout(String text) {
 }
 
 void RickRoll() {
-  Keyboard.pressRaw(0xe3);
+  Keyboard.pressRaw(0xe3); // Left GUI
   Keyboard.releaseAll();
   delay(500);
   Keyboard.println("web");
@@ -283,6 +282,9 @@ void RickRoll() {
 }
 
 void parse(String text) {
+  int32_t x, y;
+  x = 0;
+  y = 0;
   char *txt = (char *)text.c_str();
   const char *delimiter = "\n";
   char* ptr = strtok(txt, delimiter);
@@ -291,9 +293,10 @@ void parse(String text) {
       if (com.startsWith("GUI ")) {
         com.remove(0, 4);
         Keyboard.pressRaw(0xe3);
-        for (int i=0; i<sizeof(chars); i++) {
-          if (chars[i] == com){
+        for (int i=0; i<60; i++) {
+          if (com.startsWith(chars[i])){
             Keyboard.pressRaw(char_bytes[i]);
+            break;
           }
         }
       }
@@ -309,8 +312,8 @@ void parse(String text) {
       }
       else if (com.startsWith("HOLD ")) {
         com.remove(0, 5);
-        for (int i=0; i<sizeof(chars); i++) {
-          if (chars[i] == com){
+        for (int i=0; i<60; i++) {
+          if (com.startsWith(chars[i])){
             Keyboard.pressRaw(char_bytes[i]);
             break;
           }

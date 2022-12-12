@@ -19,7 +19,7 @@ MUST save and run a file with a SLASH IN FRONT and EXTENSION AFTER i.e. /example
 PRINT:  Types out the following string  
 PRINTLN: Types out the following string then hits enter  
 GUI: Presses and releases the left GUI key  
-GUI <character>: Presses the left GUI and a single character i.e. GUI r
+GUI <character>: Presses the left GUI and a single character i.e. GUI r  
 DELAY x: Waits x ms  
 ENTER: Hits enter  
 HOLD: Holds a single key. Can be used with numbers, lowercase letters, SPACE, BACKSPACE, ENTER, or TAB.

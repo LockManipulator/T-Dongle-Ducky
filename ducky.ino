@@ -75,7 +75,7 @@ IPAddress subnet(255,255,255,0);
 AsyncWebServer server(80);
 String header;
 
-String chars[86] = {
+String chars[60] = {
   "a",
   "b",
   "c",
@@ -139,7 +139,7 @@ String chars[86] = {
 };
 
 #define SHIFT 0x80
-const uint8_t char_bytes[86]{
+const uint8_t char_bytes[60]{
   0x04,          // a
   0x05,          // b
   0x06,          // c
@@ -291,7 +291,7 @@ void parse(String text) {
       if (com.startsWith("GUI ")) {
         com.remove(0, 4);
         Keyboard.pressRaw(0xe3);
-        for (int i=0; i<86; i++) {
+        for (int i=0; i<sizeof(chars); i++) {
           if (chars[i] == com){
             Keyboard.pressRaw(char_bytes[i]);
           }
@@ -309,7 +309,7 @@ void parse(String text) {
       }
       else if (com.startsWith("HOLD ")) {
         com.remove(0, 5);
-        for (int i=0; i<86; i++) {
+        for (int i=0; i<sizeof(chars); i++) {
           if (chars[i] == com){
             Keyboard.pressRaw(char_bytes[i]);
             break;

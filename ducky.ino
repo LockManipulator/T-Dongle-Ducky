@@ -152,15 +152,23 @@ String SendHTML(){
   ptr += "<form action=\"/get\">";
   ptr += "String: <input type=\"text\" id=\"input1\" name=\"input1\">";
   ptr += "<input type=\"submit\" value=\"Submit\">";
-  ptr += "</form>";
+  ptr += "</form><br>";
+  ptr += "<form action=\"/get\">";
+  ptr += "Filename: <input type=\"text\" id=\"filerun\" name=\"filerun\">";
+  ptr += "<input type=\"submit\" value=\"Run from file\">";
+  ptr+= "</form><br>";
   ptr += "<form action=\"/get\">";
   ptr += "<textarea id=\"code\" name=\"code\" id=\"code\" rows=\"10\" cols=\"30\"></textarea><br>";
   ptr += "Filename: <input type=\"text\" id=\"filesave\" name=\"filesave\">";
   ptr += "<input type=\"submit\" value=\"Save\">";
-  ptr += "</form>";
+  ptr += "</form><br>";
   ptr += "<form action=\"/get\">";
-  ptr += "Filename: <input type=\"text\" id=\"filerun\" name=\"filerun\">";
-  ptr += "<input type=\"submit\" value=\"Run from file\">";
+  ptr += "Filename: <input type=\"text\" id=\"filedel\" name=\"filedel\">";
+  ptr += "<input type=\"submit\" value=\"Delete\">";
+  ptr += "</form><br>";
+  ptr += "Files on SD<br>";
+  ptr += "-----------<br>";
+  ptr += listDir(SD_MMC, "/", 0);
   ptr += "</body></html>";
   return ptr;
 }
@@ -237,34 +245,28 @@ void parse(String text) {
   }
 }
 
-void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
-    Serial.printf("Listing directory: %s\n", dirname);
-
+String listDir(fs::FS &fs, const char * dirname, uint8_t levels){
+    String all_files = "";
     File root = fs.open(dirname);
     if(!root){
-        return;
+        return "None";
     }
     if(!root.isDirectory()){
-        Serial.println("Not a directory");
-        return;
+        return "None";
     }
 
     File file = root.openNextFile();
     while(file){
         if(file.isDirectory()){
-            Serial.print("  DIR : ");
-            Serial.println(file.name());
             if(levels){
                 listDir(fs, file.path(), levels -1);
             }
         } else {
-            Serial.print("  FILE: ");
-            Serial.print(file.name());
-            Serial.print("  SIZE: ");
-            Serial.println(file.size());
+          all_files += "/" + String(file.name()) + "<br>";
         }
         file = root.openNextFile();
     }
+    return all_files;
 }
 
 void readFile(fs::FS &fs, const char * path){
@@ -285,6 +287,10 @@ void writeFile(fs::FS &fs, const char * path, const char * message){
         return;
     }
     file.print(message);
+}
+
+void deleteFile(fs::FS &fs, const char * path){
+    fs.remove(path);
 }
 
 void setup() {
@@ -376,6 +382,12 @@ void setup() {
       inputParam = "filerun";
       char *txt = (char *)inputMessage.c_str();
       readFile(SD_MMC, txt);
+    }
+    else if (request->hasParam("filedel")) {
+      inputMessage = request->getParam("filedel")->value();
+      inputParam = "filedel";
+      char *txt = (char *)inputMessage.c_str();
+      deleteFile(SD_MMC, txt);
     }
     else {
       inputMessage = "No message sent";

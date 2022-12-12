@@ -41,4 +41,4 @@ PRINTLN www.youtube.com/watch?v=dQw4w9WgXcQ
 - Mount as USB storage device  
 - Reverse shell through USB port  
 - OS detection  
-- Automatically grab usernames and hashes, network credentials, chrome/firefox passwords, etc. 
+- Preloaded scripts to automatically grab usernames and hashes, network credentials, chrome/firefox passwords, rick roll, etc. 

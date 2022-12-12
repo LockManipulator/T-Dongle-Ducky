@@ -1,10 +1,11 @@
 /*
-Go to IP address on screen or 192.168.0.1 if in AP mode
-First input will type out the string in the box
-Second is to write code
-Third is to save above code with supplied filename
-Fourth is to run code with supplied filename
-MUST save and run a file with a SLASH IN FRONT and EXTENSION AFTER i.e. /example.txt
+Go to IP address on screen or 192.168.0.1 if in AP mode  
+First input will type out the string in the box  
+Second is to run a single command  
+Third is to write code  
+Fourth is to save above code with supplied filename  
+Fifth is to delete a file  
+MUST save/run/delete a file with a SLASH IN FRONT and EXTENSION AFTER i.e. /example.txt  
 
 PRINT: Types out the following string
 PRINTLN: Types out the following string then hits enter
@@ -152,6 +153,10 @@ String SendHTML(){
   ptr += "</head><body>";
   ptr += "<form action=\"/get\">";
   ptr += "String: <input type=\"text\" id=\"input1\" name=\"input1\">";
+  ptr += "<input type=\"submit\" value=\"Submit\">";
+  ptr += "</form><br>";
+  ptr += "<form action=\"/get\">";
+  ptr += "Command: <input type=\"text\" id=\"input2\" name=\"input2\">";
   ptr += "<input type=\"submit\" value=\"Submit\">";
   ptr += "</form><br>";
   ptr += "<form action=\"/get\">";
@@ -364,6 +369,11 @@ void setup() {
       inputMessage = request->getParam("input1")->value();
       inputParam = "input1";
       typeout(inputMessage);
+    }
+    else if (request->hasParam("input2")) {
+      inputMessage = request->getParam("input2")->value();
+      inputParam = "input2";
+      parse(inputMessage);
     }
     else if (request->hasParam("button1")) {
       inputMessage = request->getParam("button1")->value();

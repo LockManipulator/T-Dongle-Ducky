@@ -34,11 +34,11 @@ DELAY 1000
 PRINTLN www.youtube.com/watch?v=dQw4w9WgXcQ  
 
 # Roadmap  
-- Implement Ducky Script  
 - Read keyboard led states  
 - Add bluetooth command and control capabilities
 - Add mouse control  
 - Mount as USB storage device  
-- Reverse shell through USB port  
+- Built in method to get USB storage drive
+- Shell through USB port controllable through web server  
 - OS detection  
 - Preloaded scripts to automatically grab usernames and hashes, network credentials, chrome/firefox passwords, rick roll, etc. 

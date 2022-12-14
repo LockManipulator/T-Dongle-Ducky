@@ -246,15 +246,15 @@ String SendHTML(){
   ptr += "</form><br>";
   ptr += "<form action=\"/get\">";
   ptr += "<textarea id=\"code\" name=\"code\" id=\"code\" rows=\"10\" cols=\"30\"></textarea><br>";
-  ptr += "Filename: <input type=\"text\" id=\"filesave\" name=\"filesave\">";
+  ptr += "<input type=\"text\" id=\"filesave\" name=\"filesave\">";
   ptr += "<input type=\"submit\" value=\"Save\">";
   ptr += "</form><br>";
   ptr += "<form action=\"/get\">";
-  ptr += "Filename: <input type=\"text\" id=\"filerun\" name=\"filerun\">";
+  ptr += "<input type=\"text\" id=\"filerun\" name=\"filerun\">";
   ptr += "<input type=\"submit\" value=\"Run from file\">";
   ptr+= "</form><br>";
   ptr += "<form action=\"/get\">";
-  ptr += "Filename: <input type=\"text\" id=\"filedel\" name=\"filedel\">";
+  ptr += "<input type=\"text\" id=\"filedel\" name=\"filedel\">";
   ptr += "<input type=\"submit\" value=\"Delete\">";
   ptr += "</form><br>";
   ptr += "Files on SD<br>";
@@ -299,6 +299,12 @@ void parse(String text) {
             break;
           }
         }
+        Keyboard.releaseAll();
+      }
+      else if (com.startsWith("GUI")) {
+        com.remove(0, 6);
+        Keyboard.pressRaw(0xe3);
+        Keyboard.releaseAll();
       }
       else if (com.startsWith("PRINT ")) {
         com.remove(0, 6);

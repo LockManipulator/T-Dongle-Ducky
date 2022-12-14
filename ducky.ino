@@ -407,8 +407,13 @@ void wifi_setup(const char* name, const char* pass) {
   if (apmode) {
     WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(local_ip, gateway, subnet);
-    WiFi.softAP(name, pass);
-    add_ip_info(true);
+    if (pass == "") {
+      Wifi.softAP(name, NULL);
+    }
+    else {
+      WiFi.softAP(name, pass);
+      add_ip_info(true);
+    }
   }
   else {
     WiFi.mode(WIFI_STA);

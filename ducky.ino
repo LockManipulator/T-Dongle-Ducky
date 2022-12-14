@@ -233,16 +233,24 @@ String listDir(fs::FS &fs, const char * dirname, uint8_t levels){
 
 String SendHTML(){
   String ptr = "<!DOCTYPE html> <html>\n";
+  String wifi = "";
+  if (apmode) {
+    wifi = "Off";
+  }
+  else {
+    wifi = "On";
+  }
   ptr += "<title>ESP Input Form</title>";
   ptr += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";
   ptr += "</head><body>";
+  ptr += "<font size=\"+2\">Inputs</font><br>";
   ptr += "<form action=\"/get\">";
   ptr += "String: <input type=\"text\" id=\"input1\" name=\"input1\">";
-  ptr += "<input type=\"submit\" value=\"Submit\">";
+  ptr += "<input type=\"submit\" value=\"Send\">";
   ptr += "</form><br>";
   ptr += "<form action=\"/get\">";
   ptr += "Command: <input type=\"text\" id=\"input2\" name=\"input2\">";
-  ptr += "<input type=\"submit\" value=\"Submit\">";
+  ptr += "<input type=\"submit\" value=\"Send\">";
   ptr += "</form><br>";
   ptr += "<form action=\"/get\">";
   ptr += "<textarea id=\"code\" name=\"code\" id=\"code\" rows=\"10\" cols=\"30\"></textarea><br>";
@@ -260,6 +268,18 @@ String SendHTML(){
   ptr += "Files on SD<br>";
   ptr += "-----------<br>";
   ptr += listDir(SD_MMC, "/", 0);
+  ptr += "<br><br>";
+  ptr += "<font size=\"+2\">Connectivity</font>";
+  ptr += "<form action=\"/get\">";
+  ptr += "Network: <input type=\"text\" id=\"wifiname\" name=\"wifiname\"><br>";
+  ptr += "Password: <input type=\"text\" id=\"wifipass\" name=\"wifinpass\"><br>";
+  ptr += "<input type=\"submit\" value=\"Connect\">";
+  ptr += "</form><br>";
+  ptr += "<form action=\"/get\">";
+  ptr += "Network: <input type=\"text\" id=\"apname\" name=\"apname\"><br>";
+  ptr += "Password: <input type=\"text\" id=\"appass\" name=\"appass\"><br>";
+  ptr += " <input type=\"submit\" value=\"Enable AP\">";
+  ptr += "</form><br>";
   ptr += "</body></html>";
   return ptr;
 }
@@ -360,18 +380,30 @@ void deleteFile(fs::FS &fs, const char * path){
     fs.remove(path);
 }
 
-void setup() {
-  // make the pushButton pin an input:
-  pinMode(buttonPin, INPUT_PULLUP);
-  // Initialise TFT
-  tft.init();
-  tft.setRotation(3);
+void add_text() {
+  int32_t x, y;
+  x = 0;
+  y = 0;
+  //Add text to screen
   tft.fillScreen(TFT_BLACK);
-  digitalWrite(TFT_LEDA_PIN, 0);
-  tft.setTextFont(1);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  PRINT_STR("Perfmorming network", x, y);
+  PRINT_STR("diagnostics...", x, y);
+  PRINT_STR("", x, y);
+  PRINT_STR("Do not remove", x, y);
+  PRINT_STR("", x, y);
+  PRINT_STR("", x, y);
+  PRINT_STR("", x, y);
+  PRINT_STR("", x, y);
+  PRINT_STR("", x, y);
+  if (apmode) {
+    PRINT_STR("192.168.0.1", x, y);
+  }
+  else {
+    PRINT_STR(WiFi.localIP().toString(), x, y);
+  }
+}
 
-  // Connect to Wi-Fi
+void wifi_setup() {
   if (apmode) {
     WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(local_ip, gateway, subnet);
@@ -384,6 +416,21 @@ void setup() {
       delay(1000);
     }
   }
+}
+
+void setup() {
+  // make the pushButton pin an input:
+  pinMode(buttonPin, INPUT_PULLUP);
+  // Initialise TFT
+  tft.init();
+  tft.setRotation(3);
+  tft.fillScreen(TFT_BLACK);
+  digitalWrite(TFT_LEDA_PIN, 0);
+  tft.setTextFont(1);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+
+  // Connect to Wi-Fi
+  wifi_setup();
   
   // initialize control over the keyboard:
   Keyboard.begin();
@@ -404,16 +451,7 @@ void setup() {
   }
   
   //Add text to screen
-  PRINT_STR("Perfmorming network", x, y);
-  PRINT_STR("diagnostics...", x, y);
-  PRINT_STR("", x, y);
-  PRINT_STR("Do not remove", x, y);
-  PRINT_STR("", x, y);
-  PRINT_STR("", x, y);
-  PRINT_STR("", x, y);
-  PRINT_STR("", x, y);
-  PRINT_STR("", x, y);
-  PRINT_STR(WiFi.localIP().toString(), x, y);
+  add_text();
   
   // Send web page with input fields to client
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -460,6 +498,18 @@ void setup() {
       inputParam = "filedel";
       char *txt = (char *)inputMessage.c_str();
       deleteFile(SD_MMC, txt);
+    }
+    else if (request->hasParam("wifiname")) {
+     ssidnet = (char *)request->getParam("wifiname")->value().c_str();
+     passwordnet = (char *)request->getParam("wifipass")->value().c_str();
+     apmode = false;
+     wifi_setup();
+    }
+    else if (request->hasParam("apname")) {
+     ssidap = (const char *)request->getParam("apname")->value().c_str();
+     passwordap = (const char *)request->getParam("appass")->value().c_str();
+     apmode = true;
+     wifi_setup();
     }
     else {
       inputMessage = "No message sent";

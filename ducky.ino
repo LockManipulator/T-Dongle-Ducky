@@ -380,7 +380,7 @@ void deleteFile(fs::FS &fs, const char * path){
     fs.remove(path);
 }
 
-void add_text() {
+void add_ip_info() {
   int32_t x, y;
   x = 0;
   y = 0;
@@ -403,20 +403,20 @@ void add_text() {
   }
 }
 
-void wifi_setup() {
+void wifi_setup(const char* name, const char* pass) {
   if (apmode) {
     WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(local_ip, gateway, subnet);
-    WiFi.softAP(ssidap, passwordap);
+    WiFi.softAP(name, pass);
   }
   else {
     WiFi.mode(WIFI_STA);
-    WiFi.begin(ssidnet, passwordnet);
+    WiFi.begin(name, pass);
     while (WiFi.status() != WL_CONNECTED) {
       delay(1000);
     }
   }
-  add_text();
+  add_ip_info();
 }
 
 void setup() {
@@ -431,7 +431,12 @@ void setup() {
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
 
   // Connect to Wi-Fi
-  wifi_setup();
+  if (apmode) {
+    wifi_setup(ssidap, passwordap);
+  }
+  else {
+    wifi_setup(ssidnet, passwordnet);
+  }
   
   // initialize control over the keyboard:
   Keyboard.begin();
@@ -501,13 +506,13 @@ void setup() {
      ssidnet = (char *)request->getParam("wifiname")->value().c_str();
      passwordnet = (char *)request->getParam("wifipass")->value().c_str();
      apmode = false;
-     wifi_setup();
+     wifi_setup(ssidnet, passwordnet);
     }
     else if (request->hasParam("apname")) {
      ssidap = (const char *)request->getParam("apname")->value().c_str();
      passwordap = (const char *)request->getParam("appass")->value().c_str();
      apmode = true;
-     wifi_setup();
+     wifi_setup(ssidap, passwordap);
     }
     else {
       inputMessage = "No message sent";

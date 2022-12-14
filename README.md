@@ -58,3 +58,4 @@ PRINTLN www.youtube.com/watch?v=dQw4w9WgXcQ
 - Shell through USB port controllable through web server  
 - OS detection  
 - Preloaded scripts to automatically grab usernames and hashes, network credentials, chrome/firefox passwords, rick roll, etc. 
+- Switch Wifi mode/networks on the fly

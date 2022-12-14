@@ -416,6 +416,7 @@ void wifi_setup() {
       delay(1000);
     }
   }
+  add_text();
 }
 
 void setup() {
@@ -449,9 +450,6 @@ void setup() {
   if (cardType == CARD_NONE) {
     PRINT_STR("No SD_MMC card attached", x, y)    
   }
-  
-  //Add text to screen
-  add_text();
   
   // Send web page with input fields to client
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){

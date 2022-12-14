@@ -302,7 +302,7 @@ void parse(String text) {
         Keyboard.releaseAll();
       }
       else if (com.startsWith("GUI")) {
-        com.remove(0, 6);
+        com.remove(0, 3);
         Keyboard.pressRaw(0xe3);
         Keyboard.releaseAll();
       }
@@ -315,6 +315,10 @@ void parse(String text) {
         Keyboard.print(com);
         Keyboard.press(KEY_RETURN);
         Keyboard.releaseAll();
+      }
+      else if (com.startsWith("DELAY ")) {
+        com.remove(0, 6);
+        delay(com.toInt());
       }
       else if (com.startsWith("HOLD ")) {
         com.remove(0, 5);

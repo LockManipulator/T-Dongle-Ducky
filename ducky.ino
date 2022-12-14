@@ -380,7 +380,7 @@ void deleteFile(fs::FS &fs, const char * path){
     fs.remove(path);
 }
 
-void add_ip_info() {
+void add_ip_info(bool wifiap) {
   int32_t x, y;
   x = 0;
   y = 0;
@@ -395,7 +395,7 @@ void add_ip_info() {
   PRINT_STR("", x, y);
   PRINT_STR("", x, y);
   PRINT_STR("", x, y);
-  if (apmode) {
+  if (wifiap) {
     PRINT_STR("192.168.0.1", x, y);
   }
   else {
@@ -408,6 +408,7 @@ void wifi_setup(const char* name, const char* pass) {
     WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(local_ip, gateway, subnet);
     WiFi.softAP(name, pass);
+    add_ip_info(true);
   }
   else {
     WiFi.mode(WIFI_STA);
@@ -416,7 +417,6 @@ void wifi_setup(const char* name, const char* pass) {
       delay(1000);
     }
   }
-  add_ip_info();
 }
 
 void setup() {
@@ -437,7 +437,9 @@ void setup() {
   else {
     wifi_setup(ssidnet, passwordnet);
   }
-  
+
+  add_ip_info(false);
+
   // initialize control over the keyboard:
   Keyboard.begin();
   USB.begin();
@@ -507,12 +509,14 @@ void setup() {
      passwordnet = (char *)request->getParam("wifipass")->value().c_str();
      apmode = false;
      wifi_setup(ssidnet, passwordnet);
+     add_ip_info(false);
     }
     else if (request->hasParam("apname")) {
      ssidap = (const char *)request->getParam("apname")->value().c_str();
      passwordap = (const char *)request->getParam("appass")->value().c_str();
      apmode = true;
      wifi_setup(ssidap, passwordap);
+     add_ip_info(true);
     }
     else {
       inputMessage = "No message sent";

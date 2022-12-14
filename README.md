@@ -18,14 +18,14 @@ Sixth is to delete a file
 MUST save/run/delete a file with a SLASH IN FRONT and EXTENSION AFTER i.e. /example.txt  
 
 # Commands 
-PRINT: Types out the following string
-PRINTLN: Types out the following string then hits enter
-GUI: Presses and releases the left GUI key
-GUI : Presses the left GUI and a single character. Single character can be a number or lowercase letter.
-DELAY x: Waits x ms
-ENTER: Hits enter
-HOLD: Holds a single key. If letter, then it has to be lowercase.
-Anything that doesn't match the above gets treated as a comment. Comments can not, at the time, be put on the same line as a command.
+PRINT: Types out the following string  
+PRINTLN: Types out the following string then hits enter  
+GUI: Presses and releases the left GUI key  
+GUI : Presses the left GUI and a single character. Single character can be a number or lowercase letter.  
+DELAY x: Waits x ms  
+ENTER: Hits enter  
+HOLD: Holds a single key. If letter, then it has to be lowercase.  
+Anything that doesn't match the above gets treated as a comment. Comments can not, at the time, be put on the same line as a command.  
 
 # Non-alphanumeric Keys
 CTRL  

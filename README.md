@@ -1,11 +1,11 @@
 # T-Dongle-Ducky
-LilyGo T-Dongle-S3 turned into a Rubber Ducky with wifi
+LilyGo T-Dongle-S3 turned into a Rubber Ducky with wifi; controllable through a web server
 
 ![alt text](https://i.imgur.com/A33v6q3.png)
 
-Board should be ESP32-S3-USB-OTG in Arduino IDE  
-Use libraries from https://github.com/Xinyuan-LilyGO/T-Dongle-S3 under /lib if available  
-Change wifi/access point name/password in code to what you need  
+Board should be ESP32-S3-USB-OTG in Arduino IDE.  
+Use libraries from https://github.com/Xinyuan-LilyGO/T-Dongle-S3 under /lib if available.  
+Change wifi/access point name/password in code to what you need.  
 Tested on Linux but most keyboard codes should work in Windows too. Unsure about apple products unless someone wants to donate one.  
 
 # Usage

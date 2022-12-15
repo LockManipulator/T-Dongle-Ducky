@@ -67,9 +67,12 @@ const char* ssidap     = "Iphone13_Hotspot";
 const char* passwordap = NULL;
 const char* ssidnet = "WifiName"; // Change to network name you want to connect to
 const char* passwordnet = "WifiPassword"; // Change to network password
+String loginname = "root"; // Login page username
+String loginpassword = "toor"; // Login page password
 IPAddress local_ip(192,168,0,1);
 IPAddress gateway(192,168,0,1);
 IPAddress subnet(255,255,255,0);
+long randNumber;
 
 //Server handling
 AsyncWebServer server(80);
@@ -231,15 +234,31 @@ String listDir(fs::FS &fs, const char * dirname, uint8_t levels){
     return all_files;
 }
 
+const char* secretpagechar() {
+  char buf[50];
+  ltoa(randNumber, buf, 10);
+  String page = "/" + String(buf);
+  char *txt = (char *)page.c_str();
+  return txt;
+}
+
+const char* secretpageget() {
+  char buf[50];
+  ltoa(randNumber, buf, 10);
+  String page = "/" + String(buf);
+  char *txt = (char *)page.c_str();
+  return txt;
+}
+
+String secretpage() {
+  char buf[50];
+  ltoa(randNumber, buf, 10);
+  String page = "/" + String(buf);
+  return page;
+}
+
 String SendHTML(){
   String ptr = "<!DOCTYPE html> <html>\n";
-  String wifi = "";
-  if (apmode) {
-    wifi = "Off";
-  }
-  else {
-    wifi = "On";
-  }
   ptr += "<title>ESP Input Form</title>";
   ptr += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";
   ptr += "</head><body>";
@@ -278,7 +297,7 @@ String SendHTML(){
   ptr += "<form action=\"/get\">";
   ptr += "Network: <input type=\"text\" id=\"apname\" name=\"apname\"><br>";
   ptr += "Password: <input type=\"text\" id=\"appass\" name=\"appass\"><br>";
-  ptr += " <input type=\"submit\" value=\"Enable AP\">";
+  ptr += "<input type=\"submit\" value=\"Enable AP\">";
   ptr += "</form><br>";
   ptr += "</body></html>";
   return ptr;
@@ -322,7 +341,6 @@ void parse(String text) {
         Keyboard.releaseAll();
       }
       else if (com.startsWith("GUI")) {
-        com.remove(0, 3);
         Keyboard.pressRaw(0xe3);
         Keyboard.releaseAll();
       }
@@ -408,7 +426,7 @@ void wifi_setup(const char* name, const char* pass) {
     WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(local_ip, gateway, subnet);
     if (pass == "") {
-      Wifi.softAP(name, NULL);
+      WiFi.softAP(name, NULL);
     }
     else {
       WiFi.softAP(name, pass);
@@ -425,6 +443,8 @@ void wifi_setup(const char* name, const char* pass) {
 }
 
 void setup() {
+  randomSeed(42069);
+  randNumber = random(100000000, 999999999);
   // make the pushButton pin an input:
   pinMode(buttonPin, INPUT_PULLUP);
   // Initialise TFT
@@ -465,16 +485,25 @@ void setup() {
   
   // Send web page with input fields to client
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+    if(!request->authenticate((char *)loginname.c_str(), (char *)loginpassword.c_str()))
+      return request->requestAuthentication();
     request->send_P(200, "text/html", (char *)SendHTML().c_str());
   });
-
+/*
+  server.on(secretpagechar(), HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send_P(200, "text/html", (char *)SendHTML().c_str());
+  });
+*/
   // Send a GET request to <ESP_IP>/get?input1=<inputMessage>
   server.on("/get", HTTP_GET, [] (AsyncWebServerRequest *request) {
     String inputMessage;
     String inputParam;
     String inputFile;
+    
+    if(!request->authenticate((char *)loginname.c_str(), (char *)loginpassword.c_str()))
+      return request->requestAuthentication();
 
-    if (request->hasParam("input1")) {
+    else if (request->hasParam("input1")) {
       inputMessage = request->getParam("input1")->value();
       inputParam = "input1";
       typeout(inputMessage);
@@ -527,7 +556,6 @@ void setup() {
       inputMessage = "No message sent";
       inputParam = "none";
     }
-
   request->send_P(200, "text/html", (char *)SendHTML().c_str());
   /*
   request->send(200, "text/html", "HTTP GET request sent to your ESP on input field (" 
@@ -549,7 +577,7 @@ void loop() {
     // increment the button counter
     counter++;
     // Write code below to run when button is pressed
-    
+    RickRoll();
     
   }
   // save the current button state for comparison next time:

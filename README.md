@@ -44,6 +44,12 @@ TAB
 BACKSPACE  
 SPACE  
 
+# Defaults
+Access point web page IP: 192.168.0.1  
+Access point SSID: Iphone13_Hotspot  
+Web login user: root  
+Web login password: toor  
+
 # Example Rickroll
 GUI  
 DELAY 500  

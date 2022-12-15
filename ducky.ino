@@ -234,29 +234,6 @@ String listDir(fs::FS &fs, const char * dirname, uint8_t levels){
     return all_files;
 }
 
-const char* secretpagechar() {
-  char buf[50];
-  ltoa(randNumber, buf, 10);
-  String page = "/" + String(buf);
-  char *txt = (char *)page.c_str();
-  return txt;
-}
-
-const char* secretpageget() {
-  char buf[50];
-  ltoa(randNumber, buf, 10);
-  String page = "/" + String(buf);
-  char *txt = (char *)page.c_str();
-  return txt;
-}
-
-String secretpage() {
-  char buf[50];
-  ltoa(randNumber, buf, 10);
-  String page = "/" + String(buf);
-  return page;
-}
-
 String SendHTML(){
   String ptr = "<!DOCTYPE html> <html>\n";
   ptr += "<title>ESP Input Form</title>";

@@ -285,7 +285,7 @@ void notFound(AsyncWebServerRequest *request) {
 }
 
 void typeout(String text) {
-  Keyboard.println(text);
+  Keyboard.print(text);
 }
 
 void RickRoll() {

@@ -1,0 +1,7 @@
+GUI
+DELAY 200
+PRINT notepad.exe
+ENTER
+DELAY 500
+PRINT Hello World!
+ENTER

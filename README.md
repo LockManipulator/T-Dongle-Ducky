@@ -1,7 +1,10 @@
 # T-Dongle-Ducky
 LilyGo T-Dongle-S3 turned into a Rubber Ducky with wifi, controllable through a web server
 
-![alt text](https://i.imgur.com/A33v6q3.png)
+ducky.ino             |  pretty_ducky.ino
+:-------------------------:|:---------------:
+![alt text](https://i.imgur.com/A33v6q3.png)  | ![screenshot](https://i.imgur.com/9GkC9Se_d.webp?maxwidth=450&fidelity=grand)
+
 
 Board should be ESP32-S3-USB-OTG in Arduino IDE.  
 Use libraries from https://github.com/Xinyuan-LilyGO/T-Dongle-S3 under /lib if available.  

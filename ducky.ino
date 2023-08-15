@@ -69,6 +69,7 @@ const char* ssidnet = "WifiName"; // Change to network name you want to connect 
 const char* passwordnet = "WifiPassword"; // Change to network password
 String loginname = "root"; // Login page username
 String loginpassword = "toor"; // Login page password
+const byte DNS_PORT  = 53;
 IPAddress local_ip(192,168,0,1);
 IPAddress gateway(192,168,0,1);
 IPAddress subnet(255,255,255,0);
@@ -76,6 +77,7 @@ long randNumber;
 
 //Server handling
 AsyncWebServer server(80);
+DNSServer dnsServer;
 String header;
 
 String chars[60] = {
@@ -435,6 +437,8 @@ void setup() {
   // Connect to Wi-Fi
   if (apmode) {
     wifi_setup(ssidap, passwordap);
+    // We are an AP, so why not do a captive portal here?
+    dnsServer.start(DNS_PORT, "*", IP);
   }
   else {
     wifi_setup(ssidnet, passwordnet);
@@ -465,6 +469,10 @@ void setup() {
     if(!request->authenticate((char *)loginname.c_str(), (char *)loginpassword.c_str()))
       return request->requestAuthentication();
     request->send_P(200, "text/html", (char *)SendHTML().c_str());
+  });
+
+  server.on("/generate_204", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->redirect("/"); // redirect to our main page
   });
 /*
   server.on(secretpagechar(), HTTP_GET, [](AsyncWebServerRequest *request){
@@ -545,6 +553,9 @@ void setup() {
 }
 
 void loop() {
+  if (apmode) {
+    dnsServer.processNextRequest();           // Don't forget the damn dns request processing if captive portal!
+  }
   // read the pushbutton:
   int buttonState = digitalRead(buttonPin);
   // if the button state has changed,

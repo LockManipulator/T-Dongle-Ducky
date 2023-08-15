@@ -439,7 +439,7 @@ void setup() {
   if (apmode) {
     wifi_setup(ssidap, passwordap);
     // We are an AP, so why not do a captive portal here?
-    dnsServer.start(DNS_PORT, "*", IP);
+    dnsServer.start(DNS_PORT, "*", "192.168.0.1");
   }
   else {
     wifi_setup(ssidnet, passwordnet);

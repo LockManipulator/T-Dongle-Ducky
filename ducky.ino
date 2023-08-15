@@ -43,7 +43,8 @@ void setup(){}
 void loop(){}
 #else
 
-#include <WiFi.h>
+#include "WiFi.h"
+#include "DNSServer.h"
 #include "AsyncTCP.h"
 #include "ESPAsyncWebServer.h"
 #include "SD_MMC.h"
